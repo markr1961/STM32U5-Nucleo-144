@@ -52,7 +52,10 @@ __IO uint32_t BspButtonState = BUTTON_RELEASED;
 
 /* USER CODE BEGIN PV */
 
-static uint32_t nextTick;
+uint32_t nextTick, loopCount;
+uint32_t cpuid[3];
+uint32_t devid, revid;
+uint32_t ;
 
 /* USER CODE END PV */
 
@@ -66,14 +69,16 @@ static void Sleep(void)
   while (HAL_GetTick() < nextTick)
     __WFI();
 }
+
 static void PatWDog(void)
 {
-    if(HAL_IWDG_Refresh(&hiwdg) != HAL_OK)
-    {
-      /* Refresh Error */
-      Error_Handler();
-    }
+  if(HAL_IWDG_Refresh(&hiwdg) != HAL_OK)
+  {
+    /* Refresh Error */
+    Error_Handler();
+  }
 }
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -89,7 +94,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  static uint32_t loopCount = 0;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -120,7 +125,11 @@ int main(void)
   //HAL_DBGMCU_EnableDBGSleepMode();
   HAL_DBGMCU_EnableDBGStopMode();
   HAL_DBGMCU_EnableDBGStandbyMode();
-
+  cpuid[0] = HAL_GetUIDw0();
+  cpuid[1] = HAL_GetUIDw2();
+  cpuid[2] = HAL_GetUIDw0();
+  devid = HAL_GetDEVID();
+  revid = HAL_GetREVID();
   /* USER CODE END 2 */
 
   /* Initialize leds */
@@ -164,6 +173,8 @@ int main(void)
     {
       BSP_LED_Toggle(LED_RED);
       PatWDog();
+      if(BSP_LED_GetState(LED_RED))
+        printf("%d\n\r", loopCount);
     }
 
     /* -- Sample board code for User push-button in interrupt mode ---- */

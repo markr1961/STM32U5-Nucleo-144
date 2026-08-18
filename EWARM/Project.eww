@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspace>
-  <project>
-    <path>$WS_DIR$\STM32U5-nucleo-graphics.ewp</path>
-  </project>
-  <batchBuild />
+    <project>
+        <path>$WS_DIR$\STM32U5-nucleo-graphics.ewp</path>
+    </project>
+    <batchBuild>
+        <batchDefinition>
+            <name>build</name>
+            <member>
+                <project>STM32U5-nucleo-graphics</project>
+                <configuration>STM32U5-nucleo-graphics</configuration>
+            </member>
+        </batchDefinition>
+    </batchBuild>
 </workspace>
