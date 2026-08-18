@@ -5,3 +5,4 @@
 **/settings
 /EWARM/STM32U5-nucleo-graphics/.STM32U5-nucleo-graphics_build_cache
 /EWARM/STM32U5-nucleo-graphics/*.ninja*
+/.mxproject
